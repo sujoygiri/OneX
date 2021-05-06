@@ -1,0 +1,121 @@
+{% extends 'Home/home.html' %}
+
+{% block content %}
+
+<div class="container my-2">
+    <h3>For encrypte or decrypte message click below</h3>
+
+    <!-- Button for trigger encrypte modal -->
+    <button type="button" class="btn btn-primary my-2 " data-bs-toggle="modal" data-bs-target="#encrypteModal">
+        Encrypte Message
+    </button>
+    <!-- Button for trigger decrypte modal -->
+    <button type="button" class="btn btn-primary my-2 mx-2" data-bs-toggle="modal" data-bs-target="#decrypteModal">
+        Decrypte Message
+    </button>
+
+    {{ encrypted_message }}
+    {{ en_shift_val }}
+
+    {{ decrypted_message }}
+    {{ de_shift_val }}
+
+
+
+    <!-- Modal for encrypte -->
+    <div class="modal fade" id="encrypteModal" tabindex="-1" aria-labelledby="encrypteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="encrypteModalLabel">Enter Your Message and Shift Value</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/encrypte/" method="POST" id="encrypt_form">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="encrypte_text" class="form-label">Enter Your Message For Encrypte</label>
+                            <textarea class="form-control" name="encrypte_text" id="encrypte_text" cols="60" rows="2"
+                                required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="en_shift_value">Enter Shift Value</label>
+                            <input type="number" class="form-control" name="en_shift_value" id="en_shift_value"
+                                required>
+                            <div id="en_shift_value_error"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" onclick="check_value()">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal for decrypte-->
+    <div class="modal fade" id="decrypteModal" tabindex="-1" aria-labelledby="decrypteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="decrypteModalLabel">Enter Your Message and Shift Value</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/decrypte/" method="POST" id="decrypt_form">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="decrypte_text" class="form-label">Enter Your Message For Decrypte</label>
+                            <textarea class="form-control" name="decrypte_text" id="decrypte_text" cols="60" rows="2"
+                                required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="de_shift_value">Enter Shift Value</label>
+                            <input type="number" class="form-control" name="de_shift_value" id="de_shift_value"
+                                required>
+                            <div id="de_shift_value_error"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var encrypt_form = document.getElementById("encrypt_form")
+    var decrypt_form = document.getElementById("decrypt_form")
+    var en_shift_value = document.getElementById("en_shift_value")
+    var de_shift_value = document.getElementById("de_shift_value")
+    var en_shift_value_error = document.getElementById("en_shift_value_error")
+    var de_shift_value_error = document.getElementById("de_shift_value_error")
+
+    encrypt_form.addEventListener('submit', (e) => {
+        let errormesages1 = []
+        if(parseInt(en_shift_value.value) > 24){
+            errormesages1.push("Shift value should be less than 24")
+        }
+        if(errormesages1.length > 0){
+            e.preventDefault()
+            en_shift_value_error.innerText = errormesages1[0]
+
+        }
+    })
+    decrypt_form.addEventListener('submit', (e) => {
+        let errormesages2 = []
+        if(parseInt(de_shift_value.value) > 24){
+            errormesages2.push("Shift value should be less than 24")
+        }
+        if(errormesages2.length > 0){
+            e.preventDefault()
+            de_shift_value_error.innerText = errormesages2[0]
+
+        }
+    })
+
+</script>
+{% endblock content %}

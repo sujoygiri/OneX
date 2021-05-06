@@ -1,0 +1,20 @@
+{% extends 'Home/home.html' %}
+
+{% block content %}
+<style>
+    .letter_div {
+        background-color: brown;
+        height: 50px;
+        width: 50px;
+        margin: 5px;
+        text-align: center;
+    }
+</style>
+{% for letter in letter_list %}
+<div style="display: inline-block;">
+    <div class="letter_div">{{letter}}</div>
+</div>
+{% endfor %}
+
+
+{% endblock content %}
