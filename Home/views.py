@@ -61,14 +61,20 @@ def Quizler(request):
     response = requests.get("https://opentdb.com/api.php",params=params)
     question = response.json()['results'][0]['question']
     correct_answer = response.json()['results'][0]['correct_answer']
+    print(correct_answer)
     incorrect_answers = response.json()['results'][0]['incorrect_answers']
     incorrect_answers.append(correct_answer)
     question_category = response.json()['results'][0]['category']
     question_difficulty = response.json()['results'][0]['difficulty']
     shuffle(incorrect_answers)
     context = {"question":unescape(question),"correct_answer":correct_answer,
-                "incorrect_answer":unescape(incorrect_answers),"question_category":question_category,
+                "incorrect_answer0":unescape(incorrect_answers[0]),
+                "incorrect_answer1":unescape(incorrect_answers[1]),
+                "incorrect_answer2":unescape(incorrect_answers[2]),
+                "incorrect_answer3":unescape(incorrect_answers[3]),
+                "question_category":question_category,
                 "question_difficulty":question_difficulty}
+    
     return render(request,"Home/quizler.html",context=context)
 
 def Converter(request):

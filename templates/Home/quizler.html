@@ -2,10 +2,10 @@
 
 {% block content %}
 {{question}}
+
 <br>
-<div style="display: none;">
-    {{correct_answer}}
-</div>
+<input value={{correct_answer}} type="hidden" id="correct_answer">
+<label type="hidden" id="if_correct"></label>
 
 <br>
 
@@ -14,28 +14,70 @@
 {{question_difficulty}}
 
 <form action="" method="get" id="answer_form">
-    {% for item in incorrect_answer %}
+
     <div class="form-check">
-        <input class="form-check-input" type="radio" name="answer" id="answer">
-        <label class="form-check-label" for="answer">
-            {{item}}
+        <input class="form-check-input" type="radio" value="on" id="player_answer0">
+        <label class="form-check-label" for="player_answer0" id="incorrect_answer0">
+            {{incorrect_answer0}}
         </label>
     </div>
-    {% endfor %}
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" value="on" id="player_answer1">
+        <label class="form-check-label" for="player_answer1" id="incorrect_answer1">
+            {{incorrect_answer1}}
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" value="on" id="player_answer2">
+        <label class="form-check-label" for="player_answer2" id="incorrect_answer2">
+            {{incorrect_answer2}}
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" value="on" id="player_answer3">
+        <label class="form-check-label" for="player_answer3" id="incorrect_answer3">
+            {{incorrect_answer3}}
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Next</button>
 </form>
 
 
 
 <script>
-    var answer_form = document.getElementById("answer_form")
-    answer_form.addEventListener("submit", () => {
-        var answer = document.getElementsByClassName("form-check-input")
-        if (answer.checked == true){
-        console.log("hello")}
-    })
+    var correct_answer = document.getElementById("correct_answer")
+    var player_answer0 = document.getElementById("player_answer0")
+    var player_answer1 = document.getElementById("player_answer1")
+    var player_answer2 = document.getElementById("player_answer2")
+    var player_answer3 = document.getElementById("player_answer3")
+    var incorrect_answer0 = document.getElementById("incorrect_answer0")
+    var incorrect_answer1 = document.getElementById("incorrect_answer1")
+    var incorrect_answer2 = document.getElementById("incorrect_answer2")
+    var incorrect_answer3 = document.getElementById("incorrect_answer3")
+    var is_on0 = player_answer0.addEventListener("click", answer_check)
+    var is_on1 = player_answer1.addEventListener("click", answer_check)
+    var is_on2 = player_answer2.addEventListener("click", answer_check)
+    var is_on3 = player_answer3.addEventListener("click", answer_check)
+    var if_correct = document.getElementById("if_correct")
+
+    function answer_check() {
+
+        if (player_answer0.value == "on" && incorrect_answer0.innerText == correct_answer.value) {
+            if_correct.innerHTML = "<b>correct</b>"
+        } else if (player_answer1.value == "on" && incorrect_answer1.innerText == correct_answer.value) {
+            if_correct.innerHTML = "<b>correct</b>"
+        } else if (player_answer2.value == "on" && incorrect_answer2.innerText == correct_answer.value) {
+            if_correct.innerHTML = "<b>correct</b>"
+        } else if (player_answer3.value == "on" && incorrect_answer3.innerText == correct_answer.value) {
+            if_correct.innerHTML = "<b>correct</b>"
+        } else {
+            if_correct.innerHTML = "<b>Wrong</b>"
+        }
+    }
 </script>
 
 
 
 {% endblock content %}
+
