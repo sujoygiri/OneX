@@ -1,9 +1,40 @@
 {% extends 'Home/home.html' %}
 
 {% block content %}
+{{question}}
+<br>
+<div style="display: none;">
+    {{correct_answer}}
+</div>
+
+<br>
+
+{{question_category}}
+<br>
+{{question_difficulty}}
+
+<form action="" method="get" id="answer_form">
+    {% for item in incorrect_answer %}
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="answer" id="answer">
+        <label class="form-check-label" for="answer">
+            {{item}}
+        </label>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 
 
 
+<script>
+    var answer_form = document.getElementById("answer_form")
+    answer_form.addEventListener("submit", () => {
+        var answer = document.getElementsByClassName("form-check-input")
+        if (answer.checked == true){
+        console.log("hello")}
+    })
+</script>
 
 
 

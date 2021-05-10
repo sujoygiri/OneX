@@ -1,0 +1,68 @@
+{% extends 'Home/home.html' %}
+
+{% block content %}
+
+<div class="container mt-3" style="display: flex;">
+    
+    <div class="mb-3">
+        <label for="input" class="form-label">Form</label>
+        <input type="number" id="input" style="width:500px" class="form-control mb-3 mx-2">
+        <select id="inputUnit" style="height: 40px;width:500px" class=" mx-2">
+            <option value="meter">Meter</option>
+            <option value="cm">Centi Meter</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="resullt" class="form-label">To</label>
+        <input type="number" id="result" style="width:500px" class="form-control mb-3">
+        <select  id="resultUnit" style="height: 40px;width:500px" class="">
+            <option value="meter">Meter</option>
+            <option value="cm">Centi Meter</option>
+        </select>
+    </div>  
+</div>
+
+<script>
+    var input = document.getElementById("input");
+    var result = document.getElementById("result");
+    var inputUnit = document.getElementById("inputUnit");
+    var resultUnit = document.getElementById("resultUnit");
+    input.addEventListener("keyup",inputfunc);
+    result.addEventListener("keyup",resultfunc);
+    inputUnit.addEventListener("change",inputfunc);
+    resultUnit.addEventListener("change",inputfunc);
+
+    function inputfunc(){
+
+        if(inputUnit.value == "meter" && resultUnit.value == "meter"){
+            result.value = input.value;
+        }
+        else if(inputUnit.value == "meter" && resultUnit.value == "cm"){
+            result.value = input.value * 100;
+        }
+        if(inputUnit.value == "cm" && resultUnit.value == "cm"){
+            result.value = input.value;
+        }
+        else if(inputUnit.value == "cm" && resultUnit.value == "meter"){
+            result.value = input.value / 100;
+        }
+    };
+    function resultfunc(){
+
+        if(inputUnit.value == "meter" && resultUnit.value == "meter"){
+            input.value = result.value ;
+        }
+        else if(inputUnit.value == "meter" && resultUnit.value == "cm"){
+            input.value = result.value  / 100;
+        }
+        if(inputUnit.value == "cm" && resultUnit.value == "cm"){
+            input.value = result.value ;
+        }
+        else if(inputUnit.value == "cm" && resultUnit.value == "meter"){
+            input.value = result.value  * 100;
+        }
+    };
+
+</script>
+
+{% endblock content %}
